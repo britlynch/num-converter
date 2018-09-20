@@ -8,7 +8,7 @@
 	}
 }*/
 
-class NumConverter {
+class NumConverterApp {
 
 	public static void main(String[] args) {
 		String binaryNum = "1101";
