@@ -57,13 +57,12 @@ public class NumConverterApp {
 	
 	public static String decimalToBinary(String numFrom) {
 		int quotient = Integer.parseInt(numFrom);
-		int divisor = 2;
 		Stack numStack = new Stack(20); //creates stack
 		String newNum = "";
 		
 		while (quotient != 0) {
-			numStack.push(Integer.toString(quotient%divisor));
-			quotient = quotient / divisor;
+			numStack.push(Integer.toString(quotient%2));
+			quotient = quotient / 2;
 		}
 		while (!numStack.isEmpty()) {
 			newNum += numStack.pop();
