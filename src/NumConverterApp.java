@@ -1,37 +1,73 @@
-/*private static String ToDecimal(char numSysFrom, string numFrom) {
-	String newNum;
+package numconverter;
 
-	switch (numSysFrom) {
-		case a: newNum = BinaryToDecimal(numFrom);
-				break;
-		case b:
-	}
-}*/
+/** 
+ * The NumConverterApp asks user for a value and the number system to convert 
+ * to. The conversion is performed and the result is displayed to the user.
+ * 
+ * @author Brittany Lynch
+ * @since 2018-10-03
+ * 
+ */
 
-class NumConverterApp {
+import java.util.Scanner;
+
+public class NumConverterApp {
 
 	public static void main(String[] args) {
-		String binaryNum = "1101";
+		String number;
+		int numSystem;
 		
-		System.out.println("The binary number to convert is " + binaryNum);
+		Scanner keyboard = new Scanner(System.in);
+		System.out.println("What number would you like to convert?");
+		number = keyboard.next();
+		
+		System.out.println("What number system would you like to convert to? (1=binary, 2=decimal)");
+		numSystem = keyboard.nextInt();
+		
+		if (numSystem == 1) {
+			System.out.println(number + " in binary is " + decimalToBinary(number));
+		} else if (numSystem == 2) {
+			System.out.println(number + " in decimal is " + binaryToDecimal(number));
 
-		String decimalNum = BinaryToDecimal(binaryNum);
-
-		System.out.println("The decimal equivalent is " + decimalNum);
+		} else {
+			System.out.println("Invalid selection");
+		}
 	}
 
-	private static String BinaryToDecimal(String numFrom) {
-		String newNum;
-		double sum = 0;
-
-		int length = numFrom.length();
-		for (int index=0; index<length; index++) {
-			System.out.println(numFrom.charAt(index));
-			System.out.println(Math.pow(2, index));
-			sum = (numFrom.charAt(index)) * (Math.pow(2, index));
-			System.out.println(sum);
+	private static double binaryToDecimal(String numFrom) {
+		double decimalNum = 0;
+		int binaryNum = 0;
+		Stack thisStack = new Stack(20);
+		
+		for (int i=0; i<numFrom.length(); i++) {
+			String sub = numFrom.substring(i, i+1);
+			thisStack.push(sub);
 		}
-
-		return Double.toString(sum);
+		
+		
+		for (int i=0; i<numFrom.length(); i++) {
+			binaryNum = Integer.parseInt(thisStack.pop());
+			decimalNum = decimalNum + (binaryNum*Math.pow(2,i));
+		}
+		return decimalNum;
+		
+		
+		
+	}
+	
+	public static String decimalToBinary(String numFrom) {
+		int quotient = Integer.parseInt(numFrom);
+		int divisor = 2;
+		Stack numStack = new Stack(20); //creates stack
+		String newNum = "";
+		
+		while (quotient != 0) {
+			numStack.push(Integer.toString(quotient%divisor));
+			quotient = quotient / divisor;
+		}
+		while (!numStack.isEmpty()) {
+			newNum += numStack.pop();
+		}
+		return newNum;
 	}
 }
